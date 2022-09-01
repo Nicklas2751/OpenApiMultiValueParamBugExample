@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.3</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>eu.wiegandt</groupId>
+	<artifactId>OpenApiMultiValueParamBugExample</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>OpenApiMultiValueParamBugExample</name>
+	<description>Demo project for Spring Boot OpenAPI multi value query parameter Bug</description>
+	<properties>
+		<java.version>17</java.version>
+		<springfox-swagger2.version>3.0.0</springfox-swagger2.version>
+		<jackson-databind-nullable.version>0.2.3</jackson-databind-nullable.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${springfox-swagger2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>${jackson-databind-nullable.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>6.0.1</version>
+				<executions>
+					<!-- Fake Source API -->
+					<execution>
+						<id>fake-source-service</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<!-- specify the openapi yaml -->
+							<inputSpec>${project.basedir}/src/main/resources/openapi/api/example.yml
+							</inputSpec>
+
+							<!-- target to generate java server code -->
+							<generatorName>spring</generatorName>
+
+							<apiPackage>eu.wiegandt.OpenApiMultiValueParamBugExample.api</apiPackage>
+							<modelPackage>eu.wiegandt.OpenApiMultiValueParamBugExample.model</modelPackage>
+							<invokerPackage>eu.wiegandt.OpenApiMultiValueParamBugExample.invoker</invokerPackage>
+							<packageName>eu.wiegandt.OpenApiMultiValueParamBugExample.server</packageName>
+
+							<!-- pass any necessary config options -->
+							<configOptions>
+								<serializableModel>true</serializableModel>
+								<snapshotVersion>true</snapshotVersion>
+								<delegatePattern>true</delegatePattern>
+								<useBeanValidation>false</useBeanValidation>
+								<performBeanValidation>false</performBeanValidation>
+								<dateLibrary>java8</dateLibrary>
+								<useTags>false</useTags>
+							</configOptions>
+
+							<!-- prevent generation of unnecessary files -->
+							<generateApis>true</generateApis>
+							<generateModels>true</generateModels>
+							<generateApiTests>false</generateApiTests>
+							<generateModelTests>false</generateModelTests>
+							<generateApiDocumentation>false</generateApiDocumentation>
+							<generateModelDocumentation>false</generateModelDocumentation>
+							<generateSupportingFiles>true</generateSupportingFiles>
+							<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+							<additionalProperties>removeEnumValuePrefix=false</additionalProperties>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
